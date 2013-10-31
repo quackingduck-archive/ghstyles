@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Given some html (on stdin), wraps it in html that applies the same aesthetic
+# that github uses for rendering markdown-processed content
+
+# Usage:
+# markdown < in.md | ghstyles > out.html
+
+# If you have node.js installed I recommend the [marked] processor. It's fast,
+# supports "github flavored" markdown by default and has no dependencies
+# (other than node itself).
+
+# [marked]:https://github.com/chjj/marked
+
+# This changes reasonably often
+gh_assets_sha=36a739f363b4b05a1420c5047e7a3589117a465f
+
+header=`cat <<HTML
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<!-- Use Github's CDN for assets -->
+<base href="http://github.global.ssl.fastly.net">
+<!-- Github stylesheet that includes styles for markdown formatted content -->
+<link href="/assets/github-${gh_assets_sha}.css" rel="stylesheet" type="text/css">
+<!-- Style article chrome -->
+<style>
+  article {
+    margin: 64px auto;
+    box-sizing: border-box;
+    width: 910px;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    box-shadow: 0px 0px 2px #ddd;
+  }
+</style>
+</head>
+<body>
+<article class="markdown-body">
+HTML`
+
+footer=`cat <<HTML
+</article>
+</body>
+</html>
+HTML`
+
+echo "$header"
+cat
+echo "$footer"

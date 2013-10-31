@@ -1,0 +1,5 @@
+Applies the aesthetic github uses for markdown documents to some html
+
+Pairs well with a markdown processor:
+
+    markdown < in.md | ghstyles > out.html

@@ -1,0 +1,21 @@
+{
+  "name": "ghstyles",
+  "version": "0.0.0",
+  "description": "Apply github styles to some html",
+  "bin": {
+    "ghstyles": "ghstyles"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quackingduck/ghstyles"
+  },
+  "author": "Myles Byrne <myles@myles.id.au>",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/quackingduck/ghstyles/issues"
+  },
+  "keywords": [
+    "github",
+    "markdown"
+  ]
+}
