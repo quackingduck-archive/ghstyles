@@ -13,7 +13,7 @@
 # [marked]:https://github.com/chjj/marked
 
 # This changes reasonably often
-gh_assets_sha=36a739f363b4b05a1420c5047e7a3589117a465f
+gh_assets_sha=9a2db5f210ccf9921691f9c282c4d7795ddc350d
 
 header=`cat <<HTML
 <!DOCTYPE html>
