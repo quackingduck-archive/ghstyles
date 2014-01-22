@@ -12,8 +12,23 @@
 
 # [marked]:https://github.com/chjj/marked
 
-# This changes reasonably often
-gh_assets_sha=9a2db5f210ccf9921691f9c282c4d7795ddc350d
+# ---
+
+# Figure out the current shasum of github's css bundle
+
+css_sha_path=/tmp/ghstyles-github-css-shasum
+css_sha_path_is_older_than_5mins=`test -f $css_sha_path && find $css_sha_path -mmin +5`
+
+# Update cache if not present or too old
+(test ! -f $css_sha_path || test $css_sha_path_is_older_than_5mins) && {
+  curl -s https://github.com |
+    grep 'https://github.global.ssl.fastly.net/assets/github-[[:xdigit:]]\{40\}.css' |
+    grep -o '[[:xdigit:]]\{40\}' > $css_sha_path
+}
+
+css_sha=`cat $css_sha_path`
+
+# ---
 
 header=`cat <<HTML
 <!DOCTYPE html>
@@ -23,7 +38,7 @@ header=`cat <<HTML
 <!-- Use Github's CDN for assets -->
 <base href="http://github.global.ssl.fastly.net">
 <!-- Github stylesheet that includes styles for markdown formatted content -->
-<link href="/assets/github-${gh_assets_sha}.css" rel="stylesheet" type="text/css">
+<link href="/assets/github-${css_sha}.css" rel="stylesheet" type="text/css">
 <!-- Style article chrome -->
 <style>
   article {
