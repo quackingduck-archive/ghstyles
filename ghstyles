@@ -15,7 +15,6 @@
 # ---
 
 # Figure out the current shasum of github's css bundle
-
 css_sha_path=/tmp/ghstyles-github-css-shasum
 css_sha_path_is_older_than_5mins=`test -f $css_sha_path && find $css_sha_path -mmin +5`
 
