@@ -21,10 +21,10 @@
 # no `readlink -f` on OSX, hax hax, grumble grumble
 # https://github.com/harto/realpath-osx
 realpath="$(python -c 'import os,sys; print os.path.realpath(sys.argv[1])' "$0")"
-dir="$(dirname "$realpath")"
+PATH="$(dirname "$realpath"):$PATH"
 
 host="http://assets-cdn.github.com"
-path="/assets/github-$("$dir"/github-css-id).css"
+path="/assets/github-$(github-css-id).css"
 
 cat <<HTML # Concatenate header
 <!DOCTYPE html>
