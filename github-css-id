@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Figure out the current id of github's css bundle. Cache it for 5mins.
+# Print it to stdout
+
+cache_path='/tmp/ghstyles-github-css-id'
+cache_path_is_older_than_5mins=$([[ -f $cache_path ]] && find $cache_path -mmin +5)
+
+# Update cache if not present or too old
+[[ ! -f $cache_path || $cache_path_is_older_than_5mins ]] && {
+  curl -s https://github.com |
+    grep 'https://assets-cdn.github.com/assets/github-[[:xdigit:]]\{40\}.css' |
+    grep -o '[[:xdigit:]]\{40\}' > $cache_path
+}
+
+cat $cache_path

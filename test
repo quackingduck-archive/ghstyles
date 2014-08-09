@@ -1,0 +1,10 @@
+#!/bin/bash
+
+<<HTML ./ghstyles > test.html && open test.html
+<blockquote>
+  Every program is a part of some other program and rarely fits.
+</blockquote>
+<a href="http://www.cs.yale.edu/homes/perlis-alan/quotes.html">
+  ~ Alan Perlis
+</a>
+HTML

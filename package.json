@@ -1,6 +1,6 @@
 {
   "name": "ghstyles",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "Apply github styles to some html",
   "bin": {
     "ghstyles": "ghstyles"

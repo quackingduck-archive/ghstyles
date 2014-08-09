@@ -12,32 +12,28 @@
 
 # [marked]:https://github.com/chjj/marked
 
-# ---
-
-# Figure out the current shasum of github's css bundle
-css_sha_path=/tmp/ghstyles-github-css-shasum
-css_sha_path_is_older_than_5mins=`test -f $css_sha_path && find $css_sha_path -mmin +5`
-
-# Update cache if not present or too old
-(test ! -f $css_sha_path || test $css_sha_path_is_older_than_5mins) && {
-  curl -s https://github.com |
-    grep 'https://github.global.ssl.fastly.net/assets/github-[[:xdigit:]]\{40\}.css' |
-    grep -o '[[:xdigit:]]\{40\}' > $css_sha_path
+# If stdin is terminal then bail
+[[ -t 0 ]] && {
+  echo 'pipe something to me!'
+  exit 1
 }
 
-css_sha=`cat $css_sha_path`
+# no `readlink -f` on OSX, hax hax, grumble grumble
+realpath="$(python -c 'import os,sys; print os.path.realpath(sys.argv[1])' "$0")"
+dir="$(dirname "$realpath")"
 
-# ---
+host="http://assets-cdn.github.com"
+path="/assets/github-$("$dir"/github-css-id).css"
 
-header=`cat <<HTML
+cat <<HTML # Concatenate header
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
 <!-- Use Github's CDN for assets -->
-<base href="http://github.global.ssl.fastly.net">
+<base href="$host">
 <!-- Github stylesheet that includes styles for markdown formatted content -->
-<link href="/assets/github-${css_sha}.css" rel="stylesheet" type="text/css">
+<link href="$path" rel="stylesheet" type="text/css">
 <!-- Style article chrome -->
 <style>
   article {
@@ -53,14 +49,12 @@ header=`cat <<HTML
 </head>
 <body>
 <article class="markdown-body">
-HTML`
+HTML
 
-footer=`cat <<HTML
+cat # Concatenate stdin
+
+cat <<HTML # Concatenate footer
 </article>
 </body>
 </html>
-HTML`
-
-echo "$header"
-cat
-echo "$footer"
+HTML
