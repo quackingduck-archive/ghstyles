@@ -9,8 +9,8 @@ cache_path_is_older_than_5mins=$([[ -f $cache_path ]] && find $cache_path -mmin 
 # Update cache if not present or too old
 [[ ! -f $cache_path || $cache_path_is_older_than_5mins ]] && {
   curl -s https://github.com |
-    grep 'https://assets-cdn.github.com/assets/github-[[:xdigit:]]\{40\}.css' |
-    grep -o '[[:xdigit:]]\{40\}' > $cache_path
+    grep 'https://assets-cdn.github.com/assets/github-[[:xdigit:]]\{64\}.css' |
+    grep -o '[[:xdigit:]]\{64\}' > $cache_path
 }
 
 cat $cache_path
