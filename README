@@ -8,5 +8,5 @@ You can install this with npm:
 
     npm install -g ghstyles
 
-Or you can manually copy the executables to somewhere in your $PATH like some
-kind of animal.
+Or you can manually copy the executables to somewhere in your $PATH 
+... like some kind of animal.
